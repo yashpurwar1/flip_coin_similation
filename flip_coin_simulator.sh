@@ -3,36 +3,31 @@ echo "Welcome to Flip coin simulation problem"
 
 heads_count=0
 tails_count=0
-flips=0
 
 while [ true ]
 do
-	(( flips++ ))
 	toss=$((RANDOM%2))
 
-if [ $toss -eq 0 ]
-then
+	if [ $toss -eq 0 ]
+	then
 	echo "Heads"
 	(( heads_count++ ))
-else
+	else
 	echo "Tails"
 	(( tails_count++))
-fi
+	fi
 
-if [ $heads_count -eq 21 -o $tails_count -eq 21 ]
-then
-	break
-fi
+difference=$(($heads_count-$tails_count))
+	if [ $heads_count -eq 21 -a $difference -ge 2 ]
+        then
+        echo "Heads won by $difference points"
+        	break
+	fi
+
+        if [ $tails_count -eq 21 -a ${difference#-} -ge 2 ]
+        then
+         echo "Tails won by ${difference#-} points"
+         	break
+   	fi
 done
-
-echo "Heads-count=$heads_count and Tails-count=$tails_count"
-
-if [ $heads_count -gt $tails_count ]
-then
-	echo "Heads won by $(($heads_count-$tails_count )) counts"
-elif [ $tails_count -gt $heads_count ]
-then
-	echo "Tails won by $(($tails_count-$heads_count)) counts"
-else
-	echo "Its a tie"
-fi
+echo "The Heads count is $heads_count and Tails Count is $tails_count"
